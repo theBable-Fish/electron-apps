@@ -3,7 +3,10 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const {app, BrowserWindow, Menu} = electron;
+const {app, BrowserWindow, Menu, ipcMain} = electron;
+
+// Set Env
+process.env.NODE_ENV = 'production';
 
 let mainWindow;
 let addWindow;
@@ -51,6 +54,12 @@ function createAddWindow(){
 	});
 };
 
+// Catch item:add
+ipcMain.on('item:add',function(e, item){
+	mainWindow.webContents.send('item:add', item);
+	addWindow.close();
+})
+
 const mainMenuTemplate = [
 	{
 		label:'File',
@@ -62,6 +71,9 @@ const mainMenuTemplate = [
 				}},{
 				label: 'Remove Item',
 				accelerator: process.platform == 'darwin' ? 'Command+R' : 'CTRL+R',
+				click(){
+					mainWindow.webContents.send('item:clear')
+				}
 			},{
 			label: 'Quit',
 				accelerator: process.platform == 'darwin' ? 'Command+Q' : 'CTRL+Q',
