@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello World</title>
+    </head>
+    <body>
+        <p style="color: green">Hello electron!</p>
+        <div class="container">
+           <h1>SysInfoApp</h1>
+           <div id="output"></div>
+     </div>
+    </body>
+</html>
+<script>
+    let showcool = '
+        <h2 class="page-header">App version Data</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Node: ${process.versions.node}</li>
+        </ul>
+    ';
+
+    document.getElementById('showcool').innerHTML = output;
+</script>
+<script>
+    require('./renderer.js')
+</script>
